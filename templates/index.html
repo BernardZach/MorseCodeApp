@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Morse Code Trainer Game</h1>
+
+    <button onclick="startGame()">Start Game</button>
+    <h2 id="phraseDisplay">Phrase: (Waiting...)</h2>
+    <h3>Lives: <span id="lives">3</span></h3>
+
+    <label for="speedInput">Dot Duration (ms):</label>
+    <input type="number" id="speedInput" value="100">
+    <button onclick="updateSpeed()">Update Speed</button>
+
+    <h3>Press 'N' for Dot (.) | 'M' for Dash (-)</h3>
+    <p>Current Input: <span id="userInput"></span></p>
+
+    <button onclick="playMorse()">Play Morse Code</button>
+    <button onclick="submitInput()">Submit Answer</button>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
