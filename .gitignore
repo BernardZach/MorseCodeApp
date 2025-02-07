@@ -1,3 +1,22 @@
+# Ignore the data folder (contains generated test words)
 data/
+
+# Ignore generated Morse sound files
 static/sounds/
+
+# Ignore the Morse output file
 static/morse_output.wav
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
