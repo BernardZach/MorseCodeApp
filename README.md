@@ -100,16 +100,12 @@ morse-code-trainer/
 ## **🔹 Future Enhancements**
 - 🔥 **Leaderboard**: Track top scores.  
 - 🎨 **Better UI/UX**: Animated feedback.  
-- 📡 **Multiplayer Mode**: Compete with friends.  
+- 📡 **Multiplayer Mode**: Add game elements (relearn mistakes)
+- 🤖 **incorperate AI**: Add AI to work on  hard letters or phrases
 
 ---
 
 ## **🔹 Contributing**
 Feel free to fork the repository and submit pull requests. If you find a bug or have suggestions, open an issue on GitHub.
-
----
-
-## **🔹 License**
-This project is open-source and available under the **MIT License**.
 
 ---
