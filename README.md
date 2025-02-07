@@ -1,7 +1,3 @@
-Here's a well-structured **`README.md`** for your Morse Code Trainer app:
-
----
-
 ## **Morse Code Trainer Game**
 A simple **Flask web app** that helps users **learn Morse code** by listening to Morse code and typing the correct sequence. The game progresses through different levels, tracking the player's input and adjusting Morse speed dynamically.
 
@@ -117,5 +113,3 @@ Feel free to fork the repository and submit pull requests. If you find a bug or 
 This project is open-source and available under the **MIT License**.
 
 ---
-
-🚀 **Now your Morse Code Trainer app is fully documented!** Let me know if you'd like more refinements! 🔥🎉
