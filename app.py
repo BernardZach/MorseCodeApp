@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, request, send_file, render_template
 from src.morse_audio import MorseCodeTrainer
-from src.morse_data import load_morse_test_data
+from src.morse_data import generate_and_load_morse_test_data
 import os
 from generate_morse_sounds import generate_morse_sounds
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 trainer = MorseCodeTrainer(dot_duration=100)
-test_data = load_morse_test_data()
+test_data = generate_and_load_morse_test_data()
 
 # Generate Morse sounds at startup
 generate_morse_sounds(trainer)
@@ -51,7 +51,9 @@ def start_game():
 def play_morse():
     """Plays Morse code for the current test phrase."""
     index = game_state["current_index"]
-    
+
+    print(f"play morse current state: '{game_state['current_index']}'")
+
     if index not in test_data:
         return jsonify({"error": "Invalid index"}), 404
     

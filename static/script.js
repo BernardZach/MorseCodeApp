@@ -4,21 +4,24 @@ let currentIndex = 0;
 let lives = 3;
 
 document.addEventListener("keydown", function(event) {
+    let userInputDisplay = document.getElementById("userInputDisplay");
+
     if (event.key === "n" || event.key === "N") {
         userInput += ".";
         playDot();
     } else if (event.key === "m" || event.key === "M") {
         userInput += "-";
         playDash();
-    } else if (event.key === " ") {  // Capture space for letter separation
-        userInput += " ";
+    } else if (event.key === " ") {
+        userInput += " ";  // Allow spaces
     }
-    
-    document.getElementById("userInput").innerText = userInput;
 
-    // print current user input 
-    console.log("DEBUG: User Input    :", userInput);  // Debug log user input
+    if (userInput.length > 0) {
+        userInputDisplay.classList.remove("hidden");  // Show input text
+        userInputDisplay.innerText = userInput;  // Update text display
+    }
 });
+
 
 
 function startGame() {
@@ -38,18 +41,41 @@ function loadPhrase() {
         .then(data => {
             document.getElementById("phraseDisplay").innerText = `Phrase: ${data.phrase}`;
             correctMorse = data.morse_code;
-            userInput = "";
-            document.getElementById("userInput").innerText = "";
+            userInput = "";  // Reset user input
 
-            console.log("DEBUG: Correct Morse Code:", correctMorse);  // Logs the correct answer for debugging
+            let userInputDisplay = document.getElementById("userInputDisplay");
+            if (userInputDisplay) {
+                userInputDisplay.innerText = "";  // Clear previous input
+                userInputDisplay.classList.add("hidden");  // Hide it
+            } else {
+                console.error("Error: userInputDisplay element not found!");
+            }
+
+            console.log("DEBUG: Loaded New Phrase:", data.phrase);
+            console.log("DEBUG: Correct Morse Code:", correctMorse);
         })
         .catch(error => console.error("Error loading phrase:", error));
 }
 
 
+
+
+let morseAudio = null;  // Track current audio instance
+
 function playMorse() {
-    let audio = new Audio("/api/play-morse");
-    audio.play();
+    // Ensure correct Morse file is generated before playing
+    fetch("/api/play-morse")
+        .then(response => response.blob())  // Ensure the new file is downloaded
+        .then(blob => {
+            let url = URL.createObjectURL(blob);  // Create an object URL for the new audio
+            if (morseAudio) {
+                morseAudio.pause();  // Stop previous audio
+                morseAudio.currentTime = 0;
+            }
+            morseAudio = new Audio(url);
+            morseAudio.play();
+        })
+        .catch(error => console.error("Error playing Morse code:", error));
 }
 
 function submitInput() {
@@ -60,23 +86,30 @@ function submitInput() {
     })
     .then(response => response.json())
     .then(data => {
-
-        // print Comparison of user input with correct input
         console.log("DEBUG: User submitted:", userInput);
         console.log("DEBUG: Correct Morse :", data.correct_morse);
+        console.log("DEBUG: Next Index    :", data.next_index);
 
         alert(data.message);
-        
+
+        let userInputDisplay = document.getElementById("userInputDisplay");
+
         if (data.game_over) {
             document.getElementById("phraseDisplay").innerText = "Game Over! Restart to play again.";
         } else {
             lives = data.lives;
             document.getElementById("lives").innerText = lives;
-            userInput = "";
-            document.getElementById("userInput").innerText = "";
-            
+            userInput = "";  // Clear input
+
+            if (userInputDisplay) {
+                userInputDisplay.innerText = "";  // Clear displayed input
+                userInputDisplay.classList.add("hidden");  // Hide it until the user types again
+            } else {
+                console.error("Error: userInputDisplay element not found!");
+            }
+
             if (data.message === "Correct!") {
-                loadPhrase();
+                loadPhrase();  // Move to the next level
             }
         }
     })
@@ -84,9 +117,11 @@ function submitInput() {
 }
 
 
+
 function updateSpeed() {
     let speed = document.getElementById("speedInput").value;
-    
+    document.getElementById("speedValue").innerText = speed;  // Update displayed speed value
+
     fetch("/api/set-speed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,16 +129,18 @@ function updateSpeed() {
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
-    });
+        console.log("DEBUG: Speed Updated to", speed);
+    })
+    .catch(error => console.error("Error updating speed:", error));
 }
 
+
 function playDot() {
-    let dotSound = new Audio("/static/dot.wav");
+    let dotSound = new Audio("/static/sounds/dot.wav");
     dotSound.play();
 }
 
 function playDash() {
-    let dashSound = new Audio("/static/dash.wav");
+    let dashSound = new Audio("/static/sounds/dash.wav");
     dashSound.play();
 }

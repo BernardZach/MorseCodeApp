@@ -1,20 +1,120 @@
+/* General styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-}
-
-button {
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-ul {
-    list-style: none;
+    background-color: #1e1e2e;  /* Dark background */
+    color: #ffffff;  /* White text */
+    margin: 0;
     padding: 0;
 }
 
-li {
+/* Centered game container */
+.game-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #2e2e3e; /* Darker panel */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header styling */
+h1 {
+    font-size: 26px;
+    color: #ffcc00; /* Yellow highlight */
+}
+
+/* Phrase display */
+#phraseDisplay {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #ffd700; /* Golden color */
+}
+
+/* Lives counter */
+#lives {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6666; /* Red lives counter */
+}
+
+/* Buttons */
+button {
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Blue buttons */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Input fields */
+input[type="number"] {
+    padding: 10px;
+    border: 2px solid #555;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 80px;
+    text-align: center;
+}
+
+/* Input display */
+#userInput {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    background: #333;
+    color: #ffcc00;
+    border-radius: 8px;
+    display: inline-block;
+    min-width: 150px;
+}
+
+.speed-control {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#speedInput {
+    width: 60%;
     margin: 10px 0;
+    accent-color: #ffcc00;  /* Yellow slider */
+    cursor: pointer;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#userInputDisplay {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #ffd700; /* Golden yellow (same as phrase) */
+    background: none; /* No input box */
+    padding: 10px;
+}
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+    .game-container {
+        width: 90%;
+    }
+
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
 }
