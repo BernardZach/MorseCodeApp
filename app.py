@@ -3,6 +3,9 @@ from src.morse_audio import MorseCodeTrainer
 from src.morse_data import generate_and_load_morse_test_data
 import os
 from generate_morse_sounds import generate_morse_sounds
+from pydub import AudioSegment
+
+AudioSegment.converter = "/usr/bin/ffmpeg"  #ffmpeg path for aws ec2
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
@@ -115,4 +118,4 @@ def check_input():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
