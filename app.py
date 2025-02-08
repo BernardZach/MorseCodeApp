@@ -116,6 +116,11 @@ def check_input():
             "correct_morse": correct_morse
         })
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Check if running on EC2 (by looking for an environment variable)
+    is_ec2 = os.getenv("EC2_INSTANCE", "false").lower() == "true"
+
+    # Use 0.0.0.0 for EC2, but 127.0.0.1 locally
+    host = "0.0.0.0" if is_ec2 else "127.0.0.1"
+    
+    app.run(host=host, port=5000, debug=True)

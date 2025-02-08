@@ -52,14 +52,14 @@ pip install -r requirements.txt
 ---
 
 ### **4️⃣ Run the App**
+
+if running on Ec2:
+```
+export EC2_INSTANCE=true
+```
 Start the Flask server:
 ```bash
 python app.py
-```
-
-The app will be accessible at:
-```
-http://127.0.0.1:5000/
 ```
 
 ---
