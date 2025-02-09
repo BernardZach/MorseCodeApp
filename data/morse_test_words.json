@@ -11,34 +11,6 @@
         {
             "index": 2,
             "words": "GOOD MORNING"
-        },
-        {
-            "index": 3,
-            "words": "PYTHON CODE"
-        },
-        {
-            "index": 4,
-            "words": "MORSE CODE TEST"
-        },
-        {
-            "index": 5,
-            "words": "SIMPLE AUDIO PLAYBACK"
-        },
-        {
-            "index": 6,
-            "words": "HELLO WORLD"
-        },
-        {
-            "index": 7,
-            "words": "TESTING ONE TWO"
-        },
-        {
-            "index": 8,
-            "words": "LEARNING MORSE CODE"
-        },
-        {
-            "index": 9,
-            "words": "FAST CODE TESTING"
         }
     ]
 }
