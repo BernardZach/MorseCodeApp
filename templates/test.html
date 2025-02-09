@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Trainer</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="#" class="nav-link">Leaderboard</a>
+            <a href="/" class="nav-link">Tests</a>
+            <a href="https://github.com/your-repo" target="_blank" class="nav-link github-link">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="nav-right">
+            <img src="/static/images/morse_logo.png" alt="Morse Code Logo" class="nav-logo">
+        </div>
+    </nav>
+
+    <!-- Background Animation -->
+    <div class="background"></div>
+
+    <!-- Main Content -->
+    <div class="test-container">
+        <h1>Morse Code Trainer</h1>
+
+        <!-- Show the selected test set -->
+        <h2>Currently Using: <strong>{{ test_set }}</strong></h2>
+
+        <!-- Display Phrase to Convert -->
+        <h3 id="phraseDisplay">Phrase: (Waiting...)</h3>
+        <h3>Lives: <span id="lives">3</span></h3>
+
+        <!-- Speed Selection Slider -->
+        <label for="speedSlider">Dot Duration (ms):</label>
+        <input type="range" id="speedSlider" min="25" max="200" value="100" oninput="updateSpeed(this.value)">
+        <span id="speedValue">100</span> ms
+
+        <!-- Input Instructions -->
+        <h3>Press 'N' for Dot (.) | 'M' for Dash (-)</h3>
+        <h2 id="userInputDisplay" class="hidden"></h2>
+
+        <!-- Buttons for Playing and Submitting -->
+        <button onclick="playMorse()">Play Morse Code</button>
+        <button onclick="submitInput()">Submit Answer</button>
+
+        <!-- Back to Home Button -->
+        <br><br>
+        <a href="{{ url_for('home') }}"><button>Back to Test Selection</button></a>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

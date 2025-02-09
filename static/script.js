@@ -118,21 +118,29 @@ function submitInput() {
 
 
 
-function updateSpeed() {
-    let speed = document.getElementById("speedInput").value;
-    document.getElementById("speedValue").innerText = speed;  // Update displayed speed value
+// Function to update the speed value display
+function updateSpeed(value) {
+    document.getElementById("speedValue").innerText = value; // Update the UI display
+    localStorage.setItem("morseSpeed", value); // Save the speed setting persistently
 
-    fetch("/api/set-speed", {
+    // Send the new speed setting to the backend
+    fetch("/api/update-speed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dot_duration: parseInt(speed) })
+        body: JSON.stringify({ dot_duration: parseInt(value) })
     })
     .then(response => response.json())
-    .then(data => {
-        console.log("DEBUG: Speed Updated to", speed);
-    })
+    .then(data => console.log("Speed updated:", data))
     .catch(error => console.error("Error updating speed:", error));
 }
+
+// Ensure the slider loads the saved speed on page load
+window.onload = function () {
+    let savedSpeed = localStorage.getItem("morseSpeed") || "100"; // Default to 100ms if not set
+    document.getElementById("speedSlider").value = savedSpeed;
+    document.getElementById("speedValue").innerText = savedSpeed;
+};
+
 
 
 function playDot() {

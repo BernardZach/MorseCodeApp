@@ -1,120 +1,165 @@
-/* General styling */
-body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    background-color: #1e1e2e;  /* Dark background */
-    color: #ffffff;  /* White text */
+/* Full-page gradient background animation */
+body, html {
+    height: 100%;
     margin: 0;
-    padding: 0;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Centered game container */
-.game-container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #2e2e3e; /* Darker panel */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Header styling */
-h1 {
-    font-size: 26px;
-    color: #ffcc00; /* Yellow highlight */
-}
-
-/* Phrase display */
-#phraseDisplay {
-    font-size: 22px;
-    font-weight: bold;
-    margin: 15px 0;
-    color: #ffd700; /* Golden color */
-}
-
-/* Lives counter */
-#lives {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff6666; /* Red lives counter */
-}
-
-/* Buttons */
-button {
-    padding: 12px 20px;
-    margin: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #007BFF; /* Blue buttons */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
-/* Input fields */
-input[type="number"] {
-    padding: 10px;
-    border: 2px solid #555;
-    border-radius: 6px;
-    font-size: 16px;
-    width: 80px;
-    text-align: center;
-}
-
-/* Input display */
-#userInput {
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    background: #333;
-    color: #ffcc00;
-    border-radius: 8px;
-    display: inline-block;
-    min-width: 150px;
-}
-
-.speed-control {
-    margin: 15px 0;
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.15); /* Semi-transparent */
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    backdrop-filter: blur(10px);
+}
+
+/* Left-aligned nav links */
+.nav-left {
+    display: flex;
     align-items: center;
 }
 
-#speedInput {
-    width: 60%;
-    margin: 10px 0;
-    accent-color: #ffcc00;  /* Yellow slider */
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #ffcc00;
+}
+
+/* GitHub Icon */
+.nav-link i {
+    font-size: 1.5rem;
+}
+
+/* GitHub Icon */
+.github-link i {
+    font-size: 2rem; /* Increase size */
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.github-link:hover i {
+    color: #ffcc00; /* Change color on hover */
+}
+
+/* Right-aligned Morse Code logo */
+.nav-right {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.nav-logo {
+    width: 40px;
+    height: 40px;
+    filter: invert(100%); /* Makes the logo white */
+}
+
+/* Gradient Animation */
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #8a2be2, #4b0082, #ffcc00);
+    background-size: 400% 400%;
+    animation: gradientBG 25s ease infinite;
+    z-index: -1;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Centered Container */
+.menu-container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.test-container {
+    position: absolute;
+    top: 350px;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Header Styles */
+h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+label {
+    color: #fff;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
     cursor: pointer;
 }
 
-.hidden {
-    visibility: hidden;
+select option {
+    background: #333;
+    color: white;
 }
 
-#userInputDisplay {
-    font-size: 22px;
-    font-weight: bold;
-    margin: 15px 0;
-    color: #ffd700; /* Golden yellow (same as phrase) */
-    background: none; /* No input box */
-    padding: 10px;
+/* Start Button */
+button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #ffcc00;
+    color: #333;
+    transition: 0.3s;
 }
 
-
-/* Responsive adjustments */
-@media screen and (max-width: 600px) {
-    .game-container {
-        width: 90%;
-    }
-
-    button {
-        width: 100%;
-        margin: 5px 0;
-    }
+button:hover {
+    background: #ffd633;
 }
