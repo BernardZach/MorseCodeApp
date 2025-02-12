@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morse Code Trainer</title>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
     <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-left">
@@ -32,7 +38,7 @@
         <h2>Currently Using: <strong>{{ test_set }}</strong></h2>
 
         <!-- Display Phrase to Convert -->
-        <h3 id="phraseDisplay">Phrase: (Waiting...)</h3>
+        <h3 id="phraseDisplay">Phrase: <span id="phraseText">Loading...</span></h3>
         <h3>Lives: <span id="lives">3</span></h3>
 
         <!-- Speed Selection Slider -->
@@ -53,6 +59,15 @@
         <a href="{{ url_for('home') }}"><button>Back to Test Selection</button></a>
     </div>
 
+    <!-- JavaScript Files -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Load the current test phrase when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            loadPhrase();
+        });
+    </script>
+
 </body>
+
 </html>
