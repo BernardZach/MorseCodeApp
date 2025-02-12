@@ -6,6 +6,11 @@ let lives = 3;
 document.addEventListener("keydown", function(event) {
     let userInputDisplay = document.getElementById("userInputDisplay");
 
+    // Prevent Morse sound playback when typing in an input field
+    if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA") {
+        return;
+    }
+
     if (event.key === "n" || event.key === "N") {
         userInput += ".";
         playDot();
@@ -24,6 +29,7 @@ document.addEventListener("keydown", function(event) {
 
 
 
+
 function startGame() {
     fetch("/api/start-game", { method: "POST" })
         .then(response => response.json())
@@ -39,14 +45,14 @@ function loadPhrase() {
     fetch("/api/get-morse")
         .then(response => response.json())
         .then(data => {
-            document.getElementById("phraseDisplay").innerText = `Phrase: ${data.phrase}`;
+            document.getElementById("phraseText").innerText = data.phrase;  // Update displayed phrase
             correctMorse = data.morse_code;
             userInput = "";  // Reset user input
 
             let userInputDisplay = document.getElementById("userInputDisplay");
             if (userInputDisplay) {
                 userInputDisplay.innerText = "";  // Clear previous input
-                userInputDisplay.classList.add("hidden");  // Hide it
+                userInputDisplay.classList.add("hidden");  // Hide it until user types
             } else {
                 console.error("Error: userInputDisplay element not found!");
             }
@@ -56,6 +62,7 @@ function loadPhrase() {
         })
         .catch(error => console.error("Error loading phrase:", error));
 }
+
 
 
 
@@ -94,16 +101,23 @@ function submitInput() {
 
         let userInputDisplay = document.getElementById("userInputDisplay");
 
+        if (data.completed) {
+            document.getElementById("phraseDisplay").innerText = "🎉 Test Complete! 🎉";
+            document.getElementById("userInputDisplay").innerText = "";
+            userInput = "";
+            return; // Stop here since the test is complete
+        }
+
         if (data.game_over) {
             document.getElementById("phraseDisplay").innerText = "Game Over! Restart to play again.";
         } else {
             lives = data.lives;
             document.getElementById("lives").innerText = lives;
-            userInput = "";  // Clear input
+            userInput = "";
 
             if (userInputDisplay) {
-                userInputDisplay.innerText = "";  // Clear displayed input
-                userInputDisplay.classList.add("hidden");  // Hide it until the user types again
+                userInputDisplay.innerText = "";
+                userInputDisplay.classList.add("hidden");
             } else {
                 console.error("Error: userInputDisplay element not found!");
             }
@@ -133,6 +147,88 @@ function updateSpeed(value) {
     .then(data => console.log("Speed updated:", data))
     .catch(error => console.error("Error updating speed:", error));
 }
+
+function updateTestSetDropdown() {
+    fetch("/api/get-test-sets", { cache: "no-store" }) // Ensure no old cache is used
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById("test_set");
+
+            if (!dropdown) {
+                console.error("Error: Dropdown element not found!");
+                return;
+            }
+
+            dropdown.innerHTML = ""; // Clear the existing options
+
+            Object.keys(data).forEach(key => {
+                let option = document.createElement("option");
+                option.value = key;
+                option.textContent = `${data[key].name} (${data[key].words.length} phrases)`;
+                dropdown.appendChild(option);
+            });
+
+            console.log("DEBUG: Updated test sets in dropdown:", data);
+        })
+        .catch(error => console.error("Error updating test dropdown:", error));
+}
+
+
+function submitTestSet() {
+    let testSetName = document.getElementById("testSetName").value.trim();
+    let words = document.getElementById("testWords").value.trim().split(",");
+
+    if (!testSetName || words.length < 1) {
+        alert("Please enter a valid test name and at least one word.");
+        return;
+    }
+
+    fetch("/api/add-test-set", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: testSetName, words: words })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert("Error: " + data.error);
+        } else {
+            alert("Test set added successfully!");
+
+            // Clear input fields
+            document.getElementById("testSetName").value = "";
+            document.getElementById("testWords").value = "";
+
+            // Fetch updated test sets and update dropdown
+            fetchTestSets();
+        }
+    })
+    .catch(error => console.error("Error submitting test set:", error));
+}
+
+// Function to refresh test sets dropdown
+function fetchTestSets() {
+    fetch("/api/get-test-sets")
+        .then(response => response.json())
+        .then(data => {
+            let dropdown = document.getElementById("test_set");
+            dropdown.innerHTML = ""; // Clear existing options
+
+            for (const [key, value] of Object.entries(data)) {
+                let option = document.createElement("option");
+                option.value = key;
+                option.textContent = `${value.name} (${value.words.length} phrases)`;
+                dropdown.appendChild(option);
+            }
+        })
+        .catch(error => console.error("Error fetching test sets:", error));
+}
+
+// Call fetchTestSets on page load to get latest test sets
+document.addEventListener("DOMContentLoaded", fetchTestSets);
+
+
+
 
 // Ensure the slider loads the saved speed on page load
 window.onload = function () {
