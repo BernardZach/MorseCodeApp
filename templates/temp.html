@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <style>
+        :root {
+            --lbox-width: 20%; /* Change this value to adjust */
+            --rbox-width: calc(100% - var(--lbox-width));
+        }
+
+        .bground {
+            position: absolute;
+            background-color: rgb(14, 1, 24);
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(0deg, #140022, #5706a3);
+            z-index: -1;
+        }
+
+        .testwindow {
+            position: absolute;
+            width: 100%;
+            height: 600px;
+            background-color: bisque;
+            display: flex;
+        }
+
+        .Lbox {
+            width: var(--lbox-width);
+            background-color: blue;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            padding-right: 10px;
+            margin-right: 10px;
+            border-style: double;
+            border-color: pink;
+        }
+
+        .Rbox {
+            width: var(--rbox-width);
+            background-color: orange;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            padding-left: 10px;
+            border-style: double;
+            border-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bground"></div>
+    <div class="testwindow">
+        <div class="Lbox">hellow</div>
+        <div class="Rbox">hellow</div>
+    </div>
+
+</body>
+
+</html>
